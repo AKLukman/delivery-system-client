@@ -1,5 +1,8 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import useAuth from '../../../hooks/useAuth'
+import { Link } from 'react-router'
+import SocialLogin from '../SocialLogin/SocialLogin'
 
 const Register = () => {
     const {
@@ -7,7 +10,16 @@ const Register = () => {
         handleSubmit,
         formState: { errors },
     } = useForm()
-    const onSubmit = ( data ) => console.log( data )
+    const { createUser } = useAuth()
+    const onSubmit = ( data ) => {
+        createUser( data.email, data.password )
+            .then( result => {
+                console.log( result.user )
+            } )
+            .catch( error => {
+                console.error( error )
+            } )
+    }
     return (
 
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
@@ -27,10 +39,12 @@ const Register = () => {
                         {errors.password?.type === "minLength" && (
                             <p className="text-red-700">Password must be at least 6 characters or longer</p>
                         )}
-                        <div><a className="link link-hover">Forgot password?</a></div>
-                        <button type='submit' className="btn btn-neutral mt-4">Register</button>
+
+                        <button type='submit' className="btn  mt-4 bg-primary uppercase font-bold">Register</button>
                     </fieldset>
+                    <p><small>Already have an account?</small><Link className="text-blue-700 font-extrabold" to="/login">Login</Link></p>
                 </form>
+                <SocialLogin></SocialLogin>
             </div>
         </div>
 
