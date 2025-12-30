@@ -14,7 +14,7 @@ const logos = [ Logo1, Logo2, Logo3, Logo4, Logo5, Logo6, Logo7 ];
 
 const LogoSlider = () => {
     return (
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 mb-20">
             <div className="container mx-auto px-4 text-center">
                 <h2 className="text-4xl font-bold mb-12">
                     We've helped thousands of <span className="text-primary">sales teams</span>
