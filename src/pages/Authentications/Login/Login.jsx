@@ -1,15 +1,27 @@
 import { useForm } from "react-hook-form"
-import { Link } from "react-router"
+import { Link, useLocation, useNavigate } from "react-router"
 import SocialLogin from "../SocialLogin/SocialLogin"
+import useAuth from "../../../hooks/useAuth"
 
 
 const Login = () => {
+    const { signInUser } = useAuth()
+    const location = useLocation()
+    const from = location.state?.from || "/"
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm()
-    const onSubmit = ( data ) => console.log( data )
+    const onSubmit = ( data ) => {
+        signInUser( data.email, data.password )
+            .then( res => {
+                console.log( res.user )
+                navigate( from )
+            } )
+            .ctach( error => console.log( error ) )
+    }
     return (
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
 

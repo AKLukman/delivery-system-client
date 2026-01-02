@@ -1,15 +1,21 @@
-import { Link } from "react-router"
-import logo from "../../../assets/logo.png"
+import { Link } from "react-router";
+import logo from "../../../assets/logo.png";
 
 const Logo = () => {
     return (
-        <Link to="/">
-            <div className="flex items-center">
-                <img className="mb-2" src={logo} alt="" />
-                <p className="text-3xl -ml-2 font-extrabold">Delivery</p>
-            </div>
-        </Link>
-    )
-}
+        <div>
+            <Link to="/" className="flex items-center gap-1">
+                <img
+                    src={logo}
+                    alt="Delivery Logo"
+                    className="h-10 w-auto"
+                />
+                <p className="text-2xl sm:text-3xl font-extrabold">
+                    Delivery
+                </p>
+            </Link>
+        </div>
+    );
+};
 
-export default Logo
+export default Logo;

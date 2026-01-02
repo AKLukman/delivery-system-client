@@ -17,8 +17,15 @@ const Navbar = () => {
 
     const navItems = <>
         <li><NavLink to="/">Home</NavLink></li>
+        <li><NavLink to="/sendParcel">Send Parcel</NavLink></li>
         <li><NavLink to="/coverage">Coverage</NavLink></li>
         <li><NavLink to="/about-us">About Us</NavLink></li>
+        {
+            user && <>
+                <li><NavLink to="/dashboard">Dashboard</NavLink></li>
+
+            </>
+        }
 
     </>
     return (
@@ -34,7 +41,7 @@ const Navbar = () => {
                         {navItems}
                     </ul>
                 </div>
-                <NavLink to="/"><Logo></Logo></NavLink>
+                <Logo></Logo>
 
             </div>
             <div className="navbar-center hidden lg:flex">
@@ -44,7 +51,7 @@ const Navbar = () => {
             </div>
             <div className="navbar-end">
                 {
-                    user ? <a onClick={handleLogout} className="btn">Logout</a> : <Link className="btn" to="/login">Login</Link>
+                    user ? <a onClick={handleLogout} className="btn btn-primary text-black font-extrabold">Logout</a> : <Link className="btn btn-primary text-black font-extrabold" to="/login">Login</Link>
                 }
             </div>
         </div>
