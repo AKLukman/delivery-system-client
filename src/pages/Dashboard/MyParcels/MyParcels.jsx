@@ -11,6 +11,7 @@ const MyParcels = () => {
     const [ selectedParcel, setSelectedParcel ] = useState( null );
 
 
+
     const { data, loading, refetch } = useQuery( {
         queryKey: [ 'my-parcels', user?.email ],
         queryFn: async () => {
@@ -104,8 +105,9 @@ const MyParcels = () => {
                         <tr>
                             <th>#</th>
                             <th>Parcel</th>
-                            <th>Type</th>
+                            <th>Parcel Id</th>
                             <th>Weight</th>
+                            <th>Parcel Status</th>
                             <th>Route</th>
                             <th>Cost</th>
                             <th>Payment</th>
@@ -121,8 +123,9 @@ const MyParcels = () => {
                                 <td className="font-semibold">
                                     {parcel.parcelName}
                                 </td>
-                                <td className="capitalize">{parcel.parcelType}</td>
+                                <td className="capitalize">{parcel._id}</td>
                                 <td>{parcel.parcelWeight} kg</td>
+                                <td>{parcel.parcelStatus}</td>
                                 <td>
                                     {parcel.senderDistrict} → {parcel.receiverDistrict}
                                 </td>
@@ -131,7 +134,7 @@ const MyParcels = () => {
                                 </td>
                                 <td>
                                     {parcel.paymentStatus === "paid" ? (
-                                        <span className="badge badge-success gap-1">
+                                        <span className="badge badge-success w-20 gap-1">
                                             ✅ Paid
                                         </span>
                                     ) : (
@@ -177,6 +180,8 @@ const MyParcels = () => {
                             <p><strong>Parcel:</strong> {selectedParcel.parcelName}</p>
                             <p><strong>Type:</strong> {selectedParcel.parcelType}</p>
                             <p><strong>Weight:</strong> {selectedParcel.parcelWeight} kg</p>
+                            <p><strong>Parcel Status:</strong> {selectedParcel.parcelStatus}</p>
+                            <p><strong>Payment Status:</strong> {selectedParcel.paymentStatus}</p>
                             <p><strong>Sender:</strong> {selectedParcel.senderName}</p>
                             <p><strong>Receiver:</strong> {selectedParcel.receiverName}</p>
                             <p><strong>Route:</strong> {selectedParcel.senderDistrict} → {selectedParcel.receiverDistrict}</p>

@@ -1,15 +1,18 @@
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
 
 const PaymentForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const axiosSecure = useAxiosSecure()
+    const { user } = useAuth()
 
+    const navigate = useNavigate()
     const [ loading, setLoading ] = useState( false );
     const [ errorMessage, setErrorMessage ] = useState( "" );
 
@@ -21,9 +24,10 @@ const PaymentForm = () => {
             return res.data
         }
     } )
-    console.log( data )
+
 
     const handleSubmit = async ( event ) => {
+        const amount = data?.data?.cost
         event.preventDefault();
         setErrorMessage( "" );
 
@@ -33,6 +37,8 @@ const PaymentForm = () => {
         if ( !card ) return;
 
         setLoading( true );
+
+        // validate card
 
         const { error, paymentMethod } = await stripe.createPaymentMethod( {
             type: "card",
@@ -50,7 +56,52 @@ const PaymentForm = () => {
         toast.success( "Card validated successfully!" );
         setLoading( false );
 
-        // 👉 next step: confirmCardPayment with clientSecret
+        //next step: payment intent
+        const res = await axiosSecure.post( "/create-payment-intent", {
+            amount,
+            parcelId
+        } )
+
+        const clientSecret = res.data.clientSecret
+
+        // confirm payment
+        const result = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+                payment_method: {
+                    card: elements.getElement( CardElement ),
+                    billing_details: {
+                        name: user.displayName,
+                        email: user.email
+                    }
+                },
+            }
+        );
+
+        if ( result.error ) {
+            toast.error( result.error.message );
+            setLoading( false );
+            return;
+        }
+
+        if ( result.paymentIntent.status === "succeeded" ) {
+            toast.success( "Payment Successful!" );
+
+            const paymentData = {
+                parcelId,
+                userEmail: user.email,
+                paymentMethod: result.paymentIntent.payment_method_types,
+                transactionId: result.paymentIntent.id,
+                amount
+            }
+            const paymentRes = await axiosSecure.post( '/payments-records', paymentData )
+
+            if ( paymentRes.data.paymentId ) {
+                navigate( '/dashboard/my-parcels' )
+            }
+        }
+
+        setLoading( false );
     };
 
     return (

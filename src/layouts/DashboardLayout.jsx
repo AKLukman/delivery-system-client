@@ -33,6 +33,14 @@ const DashboardLayout = () => {
             </NavLink>
         </li>
         <li>
+            <NavLink
+                to="/dashboard/payment-history"
+                onClick={closeDrawer}
+            >
+                💳 Payment History
+            </NavLink>
+        </li>
+        <li>
             <NavLink to="/dashboard/profile" onClick={closeDrawer}>
                 👤 Profile
             </NavLink>

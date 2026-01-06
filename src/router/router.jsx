@@ -10,6 +10,8 @@ import SendParcel from "../pages/SendParcel/SendParcel";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/Payment/Payment";
+import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory/PaymentHistory";
+import Profile from "../pages/Dashboard/Profile/Profile";
 
 
 export const router = createBrowserRouter( [
@@ -52,10 +54,19 @@ export const router = createBrowserRouter( [
             {
                 path: "my-parcels",
                 element: <MyParcels></MyParcels>
-            }, {
+            },
+            {
                 path: "payment/:parcelId",
                 element: <Payment></Payment>
-            }
+            },
+            {
+                path: "payment-history",
+                element: <PaymentHistory></PaymentHistory>
+            },
+            {
+                path: "profile",
+                element: <Profile></Profile>
+            },
         ]
     }
 
