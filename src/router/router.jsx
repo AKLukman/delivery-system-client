@@ -12,6 +12,9 @@ import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory/PaymentHistory";
 import Profile from "../pages/Dashboard/Profile/Profile";
+import Dashboard from "../pages/Dashboard/Dashboard/Dashboard";
+import BeARider from "../pages/Dashboard/Rider/BeARider/BeARider";
+import PendingRiders from "../pages/Dashboard/PendingRiders/PendingRiders";
 
 
 export const router = createBrowserRouter( [
@@ -31,6 +34,10 @@ export const router = createBrowserRouter( [
                 path: "sendParcel",
                 element: <PriavateRoutes><SendParcel></SendParcel></PriavateRoutes>,
                 loader: () => fetch( '/serviceCenters.json' ).then( res => res.json() )
+            },
+            {
+                path: "be-a-rider",
+                element: <PriavateRoutes><BeARider></BeARider></PriavateRoutes>
             }
         ]
     }, {
@@ -52,6 +59,10 @@ export const router = createBrowserRouter( [
         element: <PriavateRoutes><DashboardLayout></DashboardLayout></PriavateRoutes>,
         children: [
             {
+                path: "",
+                element: <Dashboard></Dashboard>
+            },
+            {
                 path: "my-parcels",
                 element: <MyParcels></MyParcels>
             },
@@ -62,6 +73,10 @@ export const router = createBrowserRouter( [
             {
                 path: "payment-history",
                 element: <PaymentHistory></PaymentHistory>
+            },
+            {
+                path: "riders/pending",
+                element: <PendingRiders></PendingRiders>
             },
             {
                 path: "profile",

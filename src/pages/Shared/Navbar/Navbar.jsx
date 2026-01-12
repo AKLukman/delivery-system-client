@@ -18,14 +18,18 @@ const Navbar = () => {
     const navItems = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/sendParcel">Send Parcel</NavLink></li>
-        <li><NavLink to="/coverage">Coverage</NavLink></li>
-        <li><NavLink to="/about-us">About Us</NavLink></li>
+        <li><NavLink to="/be-a-rider">Be A Rider</NavLink></li>
         {
             user && <>
                 <li><NavLink to="/dashboard">Dashboard</NavLink></li>
 
+
             </>
         }
+
+        <li><NavLink to="/coverage">Coverage</NavLink></li>
+        <li><NavLink to="/about-us">About Us</NavLink></li>
+
 
     </>
     return (

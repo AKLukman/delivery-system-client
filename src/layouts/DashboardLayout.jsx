@@ -1,5 +1,7 @@
 import { NavLink, Outlet } from "react-router";
 import useAuth from "../hooks/useAuth";
+import { FaMotorcycle, FaUserClock } from "react-icons/fa";
+
 
 
 const DashboardLayout = () => {
@@ -38,6 +40,19 @@ const DashboardLayout = () => {
                 onClick={closeDrawer}
             >
                 💳 Payment History
+            </NavLink>
+        </li>
+        <li>
+            <NavLink to="/dashboard/riders/active" onClick={closeDrawer}>
+                <FaMotorcycle className="text-lg" />
+                Active Riders
+            </NavLink>
+        </li>
+
+        <li>
+            <NavLink to="/dashboard/riders/pending" onClick={closeDrawer}>
+                <FaUserClock className="text-lg" />
+                Pending Riders
             </NavLink>
         </li>
         <li>
